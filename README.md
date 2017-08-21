@@ -2,18 +2,28 @@
 
 This is a web scraping/data analysis project on the Mosconi Cup data from 1994 to 2016.
 
-The Mosconi Cup is an annual event in the game of pocket billiards whereby the best players in America face off against the best players in Europe. Over time, the game of pool has lost a lot of its prowess and, as such, it is hard to find good statistical information on the players' past performances throughout the years. This project is an attempt to remedy that by providing the fans with interesting and useful stats regarding the players' past performances in the sport's most entertaining annual tournament.
+The Mosconi Cup is a yearly pocket billiards event during which the best players in America face off against the best players in Europe in a team 9-ball tournament. Over the last few decades, the game of pool has lost a lot of its following, and thus it has become hard to find good statistical information on the players' past performances. This project is an attempt to remedy that by providing the fans with interesting and useful stats on the sport's most entertaining annual tournament.
 
 ### Web Scraping/Data Munging
 
 The first step involved scraping wikipedia for results data. The format changed in 1998, so I started working with the newer data from 1998 to 2016.
 
-The first hurdle I encoutered was when I noticed that there was no data from 2014. I scoured the web and found results data on the matchroom sports website.
+As part of my data cleaning/eda, I noticed that my triples data had two different wordings: 'triples' and 'trebles'. I remedied this using a simple assignment statement on my pandas dataframe converting all said matches to 'triples'. Other cleaning steps included fixing the spelling on some of the players' names and removing data from the non-playing captains.
 
-The next difficulty occurred when I noticed that my data was still slightly off from expected values (when compared to data compiled by a user on the AZ billiards forum as well as the official mosconi cup facebook page). I quickly discovered that only recent data was off and visually inspected the wikipedia pages to find that the 2015 data was presented backwards (all other years had European players listed first in the wiki table). Once I discovered this problem, it was a relatively easy fix to adjust my regular expression and properly capture the data. (In retrospect, maybe I could have just switched the column names and positions?)
+In order to verify my data's accuracy, I found a small subset of data compiled by a user on the AZ billiards forum and some more data from the official mosconi cup facebook page. I manually inspected the 'observed' data output from my program with the 'accepted' data (I later realized I could use unit-testing to avoid the tedium of manual inspection) and found that the data sets did not not match up entirely. 
 
-Next, I decided that I may want to index the data by year, and so I had to rescrape the data, this time using multiindexing. 
+After reviewing my code, I noticed that I hardcoded the max length of the tables (the tables were often of max length 5) and so I adjusted my code to dynamically pick up the table lengths and rescraped the data. I picked up a few extra rows of data, but my data were still not entirely accurate w.r.t. the 'accepted' sources.
 
-After this, I made a new regular expression object to capture data from 1994-1998. At this point, I had the data from all the years (including the years as multiindex), but I was still unable to do any analysis on the 'teams' matches, since the players' names were not included.
+After a bit more inspection, I noticed that there were no results data available from wikipedia for the year 2014. I scoured the web and eventually found results data on the matchroom sports website, which I then manually scraped and added to the dataframe.
 
-My next fix involved inserting the players' names into the correct places on the team matches for each year, allowing analysis on team matches as well as a true 'total' for matches won, etc.
+I noticed that my data were still slightly off from expected values and I quickly discovered that the faulty info was from recent years (only data from players who were only active within the last few years were inaccurate) and visually inspected the more recent results data on the wikipedia pages to find that the 2015 data were presented backwards! (All other years had European players listed first in the wiki table.) Once I discovered this problem, it was a relatively easy fix to adjust my regular expression and properly recapture the data and append it to the dataframe.
+
+Next, I decided that I may want to view/select the data by year, and so I had to rescrape the data, this time using multiindexing to capture the year along with the data.
+
+My next task was to make a slight adjustment to my regular expression object to capture the oddly formatted data from 1994-1998. 
+
+At this point, I had data from all the years (including the years as multiindex), but I was still unable to do a proper analysis on any of the 'teams' matches, since the players' names were not included, just the word 'team'. So my next fix involved inserting the players' names into the correct places on the team matches for each year, allowing analysis on team matches as well as a true 'total' for matches won, matches played, etc.
+
+At this point, I was able to reinspect the data for accuracy when compared to the 'accepted' values. I found the data to be fully accurate except two players were off by one in their triples (I counted a win where AZ forum member counted a loss). After visual inspection of the wikipedia page, I verified that my data was correct as per wikipedia and I seperately confirmed it was correct with data from the matchroom sports website.
+
+
