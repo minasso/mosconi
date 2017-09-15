@@ -1,7 +1,6 @@
 def setup_df(player, team):
     import pickle
     import pandas as pd
-
     path = '//DREW/Users/andrew/Desktop/mosconi/'
     dframe = pickle.load(open(path+'pkl/allyears_clean_locs','rb'))
     dframe['Europe_lost'] = ~ dframe['Europe_won']
@@ -36,7 +35,7 @@ def overall_stats(df,team):
     teams = df[df['Format']=='Teams']
     triples = df[df['Format']=='Triples'] 
     
-    outstr='{}\n{}\n{}\n{}\n{}'.format(stats(df,team), stats(sing,team), stats(dub,team), stats(teams,team), stats(triples,team))
+    outstr='Overall: {}\nSingles: {}\nDoubles: {}\nTeams:   {}\nTriples: {}\n'.format(stats(df,team), stats(sing,team), stats(dub,team), stats(teams,team), stats(triples,team))
     print(outstr)
     return(sing,dub,teams,triples)
 
@@ -46,27 +45,14 @@ def partners(dub,player):
         dub['Partner']=dub['American_player'].str.replace(player,'')
         dub['Partner']=dub['Partner'].str.replace('&','')
         dub['Partner']=dub['Partner'].str.strip()
-        return dub.groupby('Partner').sum().sort_values(['America_won','America_lost'],ascending=False)    
+        d = dub.groupby('Partner').sum().sort_values(['America_won','America_lost'],ascending=False)
+        return d    
     else:
         dub = dub[['European_player','American_player','Europe_won','Europe_lost']]
         dub['Partner']=dub['European_player'].str.replace(player,'')
         dub['Partner']=dub['Partner'].str.replace('&','')
         dub['Partner']=dub['Partner'].str.strip()
         return dub.groupby('Partner').sum().sort_values(['Europe_won','Europe_lost'],ascending=False)
-# def partners(dub,player):
-#     if 'America_won' in dub:
-#         dub = dub[['European_player','American_player','America_won','America_lost']]
-#         dub['Partner']=dub.loc[:,'American_player'].str.replace(player,'')
-#         dub['Partner']=dub.loc[:,'Partner'].str.replace('&','')
-#         dub['Partner']=dub.loc[:,'Partner'].str.strip()
-#         dub.groupby('Partner').sum().sort_values(['America_won','America_lost'],ascending=False)    
-#     else:
-#         dub = dub[['European_player','American_player','Europe_won','Europe_lost']]
-#         dub['Partner']=dub.loc[:,'European_player'].str.replace(player,'')
-#         dub['Partner']=dub.loc[:,'Partner'].str.replace('&','')
-#         dub['Partner']=dub.loc[:,'Partner'].str.strip()
-#         dub.groupby('Partner').sum().sort_values(['Europe_won','Europe_lost'],ascending=False)
-#     return dub.groupby('Partner').sum().sort_values(['Europe_won','Europe_lost'],ascending=False)
 
 def opponents(sing):
     if 'America_won' in sing:
@@ -134,6 +120,7 @@ def wincount(dframe,years,team):
     l=0
     w=0
     tie=0
+    print('Team win-loss record by year:\n')
     for year in years:
         f,t = dframe.loc[year]['Europe_won'].value_counts(sort=False)
         print('{}: {}-{}'.format(year,f,t))
@@ -145,7 +132,8 @@ def wincount(dframe,years,team):
             tie+=1
     if 'a' in team:
         l,w = w,l
-    return 'win-loss-tie: {}-{}-{}'.format(w,l,tie)
+    print('\n')
+    print( 'Total team win-loss-tie: {}-{}-{}\n'.format(w,l,tie)  )
 
 def location(df,years,team):
     import pickle
@@ -169,7 +157,7 @@ def location(df,years,team):
     away = df.loc[aw]
     home = df.loc[hm]
 
-    print( ' Played home {} times, away {} times \n Home Games: {} \n Away Games: {}'.format(len(hm),len(aw),stats(home,team),stats(away,team)))
+    print( '\t Played home {} times, away {} times \n Home Games: {} \n Away Games: {}\n'.format(len(hm),len(aw),stats(home,team),stats(away,team)))
     return(home,away)
 
 def location_split(home,away,team):
@@ -178,13 +166,16 @@ def location_split(home,away,team):
     asing = stats(away[away['Format']=='Singles'],team)
     adub = stats(away[away['Format']=='Doubles'],team)
 
-    print(' Home Singles: {} \n Home Doubles: {} \n Away Singles: {} \n Away Doubles: {}'.format(hsing,hdub,asing,adub))
+    print(' Home Singles: {} \n Home Doubles: {} \n Away Singles: {} \n Away Doubles: {}\n'.format(hsing,hdub,asing,adub))
 
 def call_em(player,team):
     df,dframe = setup_df(player,team)
     sing,dub,teams,triples = overall_stats(df,team)
-    partners(dub,player)
-    opponents(sing)
+    print('-----Win-loss breakdown by partner----- \n')
+    print(partners(dub,player))
+    print('\n')
+    print('-----Win-loss breakdown by opponent (singles)----- \n')
+    print(opponents(sing))
     years = yearly_plot(df)
     wincount(dframe,years,team)
     home,away = location(df,years,team)
