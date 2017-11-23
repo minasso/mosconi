@@ -34,20 +34,13 @@ def overall_stats(df,team):
     dub = df[df['Format']=='Doubles']
     teams = df[df['Format']=='Teams']
     triples = df[df['Format']=='Triples'] 
+    
     outstr='Overall: {}\nSingles: {}\nDoubles: {}\nTeams:   {}\nTriples: {}\n'.format(stats(df,team), stats(sing,team), stats(dub,team), stats(teams,team), stats(triples,team))
     print(outstr)
     return(sing,dub,teams,triples)
 
-def overall_stats_2(df,team):
-    sing = df[df['Format']=='Singles']
+def partners(player,df):
     dub = df[df['Format']=='Doubles']
-    teams = df[df['Format']=='Teams']
-    triples = df[df['Format']=='Triples'] 
-    outstr='Overall: {}\nSingles: {}\nDoubles: {}\nTeams:   {}\nTriples: {}\n'.format(stats(df,team), stats(sing,team), stats(dub,team), stats(teams,team), stats(triples,team))
-    # print(outstr)
-    return(sing,dub,teams,triples)
-
-def partners(dub,player):
     if 'America_won' in dub:
         dub = dub[['European_player','American_player','America_won','America_lost']].copy()
         dub['Partner']=dub['American_player'].str.replace(player,'')
@@ -62,31 +55,11 @@ def partners(dub,player):
         dub['Partner']=dub['Partner'].str.strip()
         return dub.groupby('Partner').sum().sort_values(['Europe_won','Europe_lost'],ascending=False)
 
-def partners_2(dub,player):
-    if 'America_won' in dub:
-        dub = dub[['European_player','American_player','America_won','America_lost']].copy()
-        dub['Partner']=dub['American_player'].str.replace(player,'')
-        dub['Partner']=dub['Partner'].str.replace('&','')
-        dub['Partner']=dub['Partner'].str.strip()
-        return dub.groupby('Partner').sum().sort_values(['America_won','America_lost'],ascending=False).nlargest(1,columns='America_won')   
-    else:
-        dub = dub[['European_player','American_player','Europe_won','Europe_lost']]
-        dub['Partner']=dub['European_player'].str.replace(player,'')
-        dub['Partner']=dub['Partner'].str.replace('&','')
-        dub['Partner']=dub['Partner'].str.strip()
-        return dub.groupby('Partner').sum().sort_values(['Europe_won','Europe_lost'],ascending=False).nlargest(1,columns='Europe_won')
-
 def opponents(sing):
     if 'America_won' in sing:
         return sing.groupby('European_player').sum().sort_values('America_won',ascending = False)
     else:
         return sing.groupby('American_player').sum().sort_values('Europe_won',ascending = False)
-
-def opponents_2(sing):
-    if 'America_won' in sing:
-        return sing.groupby('European_player').sum().sort_values('America_won',ascending = False).nlargest(1,columns='America_won')
-    else:
-        return sing.groupby('American_player').sum().sort_values('Europe_won',ascending = False).nlargest(1,columns='Europe_won')
 
 def yearly_plot(df):
     lst =df.index.values.tolist() 
