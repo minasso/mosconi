@@ -1,0 +1,9 @@
+Graphical plotting of the players of the united states and their locations.
+
+Basic analysis of the population of America (add canada/latin america) and that of Europe.
+
+Whether or not Earl should be on the team.
+
+Whether or not Corey should be on the team.
+
+Take yearly results data into dataframe and do something with it.
