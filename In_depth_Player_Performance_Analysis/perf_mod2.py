@@ -39,7 +39,7 @@ def overall_stats(df,team):
     print(outstr)
     return(sing,dub,teams,triples)
 
-def partners(player,df):
+def partners(player,team):
     dub = df[df['Format']=='Doubles']
     if 'America_won' in dub:
         dub = dub[['European_player','American_player','America_won','America_lost']].copy()
