@@ -2,8 +2,14 @@ Graphical plotting of the players of the united states and their locations.
 
 Basic analysis of the population of America (add canada/latin america) and that of Europe.
 
+Full in depth player analysis of each player that is on the teams.
+
 Whether or not Earl should be on the team.
 
 Whether or not Corey should be on the team.
 
 Take yearly results data into dataframe and do something with it.
+
+Find out each players rookie year then do analysis on rookie year performances.
+
+Turn perf mod stuff into a class
