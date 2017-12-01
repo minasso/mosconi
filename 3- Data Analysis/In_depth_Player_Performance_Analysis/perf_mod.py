@@ -89,6 +89,8 @@ def opponents_2(sing):
         return sing.groupby('American_player').sum().sort_values('Europe_won',ascending = False).nlargest(1,columns='Europe_won')
 
 def yearly_plot(df):
+    import numpy as np
+    import matplotlib.pyplot as plt
     lst =df.index.values.tolist() 
     years = set([])
     for item in lst:
@@ -118,8 +120,6 @@ def yearly_plot(df):
         p=round((w*100/(w+l)),0)
         pct.append(p)
 
-    import numpy as np
-    import matplotlib.pyplot as plt
     # from IPython.core.interactiveshell import InteractiveShell
     # InteractiveShell.ast_node_interactivity = "last_expr"
 

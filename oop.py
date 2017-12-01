@@ -185,10 +185,10 @@ class Player:
         print(' Home Singles: {} \n Home Doubles: {} \n Away Singles: {} \n Away Doubles: {}\n'.format(hsing,hdub,asing,adub))
 
     def call_em(self):
-        print('------------------------------------------')
+        print('--------------------------------------- \n')
+        print('--------------------------------------- \n')
         player=self.player
-        print('          {}        '.format(player))
-        print('------------------------------------------ \n')
+        print(player)
         team=self.team
         df,dframe = self.setup_df()
         sing,dub,teams,triples = self.overall_stats(df)
