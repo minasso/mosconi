@@ -1,0 +1,14 @@
+turn pickle into sql everywhere, esp. in oop.py
+make sql tables have primary and foreign keys so that i can join etc
+rename call_em to callem
+
+get rid of decimals in oop?
+
+
+scrape data on world cup of pool wiki
+
+try out panels
+try out groupby objects
+add decorators @property to oop.py
+
+add docstrings to all fcns including class on oop.py

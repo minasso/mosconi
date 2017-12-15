@@ -8,9 +8,13 @@ class Player:
         '''Set up the player's results dataframe'''
         player=self.player
         team=self.team
-        import pickle
         import pandas as pd
         path = '//DREW/Users/andrew/Desktop/mosconi/'
+        # import sqlalchemy
+        # engine=sqlalchemy.create_engine('sqlite:///'+path+'players.db')
+        # con=engine.connect()
+        # dframe=pd.read_sql('select * from results',con,index_col=['Year','Match'])
+        import pickle
         dframe = pickle.load(open(path+'pkl/allyears_clean_locs','rb'))
         dframe['Europe_lost'] = ~ dframe['Europe_won']
         if 'a' in team.lower():
@@ -80,7 +84,7 @@ class Player:
         
         for item in lst:
             years.add(item[0])
-        years=list(years)
+        years=sorted(list(years))
 
         yearly=[]
         for year in years:
@@ -192,7 +196,7 @@ class Player:
         team=self.team
         df,dframe = self.setup_df()
         sing,dub,teams,triples = self.overall_stats(df)
-        print('-----Win-loss breakdown by partner----- \n')
+        print('-----Win-loss breakdown by partner (doubles)----- \n')
         print(self.partners(dub))
         print('\n')
         print('-----Win-loss breakdown by opponent (singles)----- \n')
