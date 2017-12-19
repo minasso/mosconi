@@ -12,3 +12,8 @@ try out groupby objects
 add decorators @property to oop.py
 
 add docstrings to all fcns including class on oop.py
+
+fix sql results table which has binary in europe_win and make it bool
+
+make sql tables related by using keys; set up schema first then insert into
+use joins merges etc in pandas to combine frames 

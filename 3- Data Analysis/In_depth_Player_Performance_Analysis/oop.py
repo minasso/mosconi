@@ -109,9 +109,6 @@ class Player:
             p=round((w*100/(w+l)),0)
             pct.append(p)
 
-        # from IPython.core.interactiveshell import InteractiveShell
-        # InteractiveShell.ast_node_interactivity = "last_expr"
-
         fig = plt.figure(figsize=(14, 8))
         ax = fig.add_subplot(111)
 
@@ -206,3 +203,12 @@ class Player:
         home,away = self.location(df,years)
         self.location_split(home,away)
         return
+
+
+        class import_data(table):
+            """docstring for import_data"""         
+            def __init__(self, table):
+                self.table=table
+            
+            
+                
