@@ -1,29 +1,35 @@
-## Mosconi Cup Web Scraping/Data Munging/Statistical Analysis
+## Mosconi Cup Web Scraping/Data Cleaning/Statistical Analysis
 
-This is a web scraping/data analysis project on the Mosconi Cup data from 1994 to 2016.
+This is a web scraping and data analysis project on the Mosconi Cup data from 1994 to 2016.
 
 The Mosconi Cup is a yearly pocket billiards event during which the best players in America face off against the best players in Europe in a team 9-ball tournament. Over the last few decades, the game of pool has lost a lot of its following, and thus it has become hard to find good statistical information on the players' past performances. This project is an attempt to remedy that by providing the fans with interesting and useful stats on the sport's most entertaining annual tournament.
 
-### Web Scraping/Data Wrangling
+### 1- Web Scraping and Temporary Storage
 
-The first step involved scraping wikipedia for results data. The format changed in 1998, so I started working with the newer data from 1998 to 2016.
+Twenty-four years worth of Mosconi Cup match results data was scraped from Wikipedia using Python with the help of several 3rd party libraries (requests, BeautifulSoup, regular expressions, etc.)
 
-As part of my data cleaning/eda, I noticed that my triples data had two different wordings: 'triples' and 'trebles'. I remedied this using a simple assignment statement on my pandas dataframe converting all said matches to 'triples'. Other cleaning steps included fixing the spelling on some of the players' names and removing data from the non-playing captains.
+Initial scrape only got data from 1998 to 2013.
 
-In order to verify my data's accuracy, I found a small subset of data compiled by a user on the AZ billiards forum and some more data from the official mosconi cup facebook page. I manually inspected the 'observed' data output from my program with the 'accepted' data (I later realized I could use unit-testing to avoid the tedium of manual inspection) and found that the data sets did not not match up entirely. 
+2014 data was missing on Wikipedia and had to be acquired from a different source (Matchroom Sports website)
 
-After reviewing my code, I noticed that I hardcoded the max length of the tables (the tables were often of max length 5) and so I adjusted my code to dynamically pick up the table lengths and rescraped the data. I picked up a few extra rows of data, but my data were still not entirely accurate w.r.t. the 'accepted' sources.
+2015 data was backwards relative to other data so had to scraper had to be tweaked a bit.
 
-After a bit more inspection, I noticed that there were no results data available from wikipedia for the year 2014. I scoured the web and eventually found results data on the matchroom sports website, which I then manually scraped and added to the dataframe.
+1994-1998 data was of a different format and had to be scraped separately then integrated into the main data set.
 
-I noticed that my data were still slightly off from expected values and I quickly discovered that the faulty info was from recent years (only data from players who were only active within the last few years were inaccurate) and visually inspected the more recent results data on the wikipedia pages to find that the 2015 data were presented backwards! (All other years had European players listed first in the wiki table.) Once I discovered this problem, it was a relatively easy fix to adjust my regular expression and properly recapture the data and append it to the dataframe.
+### 2- Data Cleaning and Organization
 
-Next, I decided that I may want to view/select the data by year, and so I had to rescrape the data, this time using multiindexing to capture the year along with the data.
+The data cleaning process involved several steps, including fixing encoding errors and misspellings, purging unnecessary data, and writing several functions to either improve the appearance of the data, or extract features as new columns in the dataframe.
 
-My next task was to make a slight adjustment to my regular expression object to capture the oddly formatted data from 1994-1998. 
+The cleaned data was then stored in a sql database in the 'results' table.
 
-At this point, I had data from all the years (including the years as multiindex), but I was still unable to do a proper analysis on any of the 'teams' matches, since the players' names were not included, just the word 'team'. So my next fix involved inserting the players' names into the correct places on the team matches for each year, allowing analysis on team matches as well as a true 'total' for matches won, matches played, etc.
+Player data as acquired seperately and stored in 'players' table. 
 
-At this point, I was able to reinspect the data for accuracy when compared to the 'accepted' values. I found the data to be fully accurate except two players were off by one in their triples (I counted a win where AZ forum member counted a loss). After visual inspection of the wikipedia page, I verified that my data was correct as per wikipedia and I seperately confirmed it was correct with data from the matchroom sports website.
+In addition, the 'Yearly' table was created to store each year's final score, along with location. 'MVP' data was extracted from the yearly data to form its own table.
 
+### 3- Data Analysis
 
+At the start of the analysis, functions were created to mine the match level results data using boolean indexing. These efforts eventually led to the creation of the 'playerstats' table in which each individual player's stats have been aggregated from the match level results.
+
+### 3-2 In Depth Player Performance Analysis
+
+This section uses an object oriented approach to provide an in-depth analysis into individual players' past performances. Topics explored include: singles vs. doubles, home vs. away, singles analysis by opponent, doubles analysis by partner, yearly performance trend, and more.

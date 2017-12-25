@@ -17,3 +17,11 @@ fix sql results table which has binary in europe_win and make it bool
 
 make sql tables related by using keys; set up schema first then insert into
 use joins merges etc in pandas to combine frames 
+---------------------------------------------------------------------
+
+scrape data from fargorate.com to make comparisons bw players' fargo rates 
+and their performance in the mosconi cup (linear plot combined pct vs fargo)
+
+fix read me and make separate blog post where discuss some challenges
+make a requirements.txt and a liscense??
+look at other project to find out what i am missing
