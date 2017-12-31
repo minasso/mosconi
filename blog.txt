@@ -1,0 +1,17 @@
+As part of my data cleaning/eda, I noticed that my triples data had two different wordings: 'triples' and 'trebles'. I remedied this using a simple assignment statement on my pandas dataframe converting all said matches to 'triples'. Other cleaning steps included fixing the spelling on some of the players' names and removing data from the non-playing captains.
+
+In order to verify my data's accuracy, I found a small subset of data compiled by a user on the AZ billiards forum and some more data from the official mosconi cup facebook page. I manually inspected the 'observed' data output from my program with the 'accepted' data (I later realized I could use unit-testing to avoid the tedium of manual inspection) and found that the data sets did not not match up entirely. 
+
+After reviewing my code, I noticed that I hardcoded the max length of the tables (the tables were often of max length 5) and so I adjusted my code to dynamically pick up the table lengths and rescraped the data. I picked up a few extra rows of data, but my data were still not entirely accurate w.r.t. the 'accepted' sources.
+
+After a bit more inspection, I noticed that there were no results data available from wikipedia for the year 2014. I scoured the web and eventually found results data on the matchroom sports website, which I then manually scraped and added to the dataframe.
+
+I noticed that my data were still slightly off from expected values and I quickly discovered that the faulty info was from recent years (only data from players who were only active within the last few years were inaccurate) and visually inspected the more recent results data on the wikipedia pages to find that the 2015 data were presented backwards! (All other years had European players listed first in the wiki table.) Once I discovered this problem, it was a relatively easy fix to adjust my regular expression and properly recapture the data and append it to the dataframe.
+
+Next, I decided that I may want to view/select the data by year, and so I had to rescrape the data, this time using multiindexing to capture the year along with the data.
+
+My next task was to make a slight adjustment to my regular expression object to capture the oddly formatted data from 1994-1998. 
+
+At this point, I had data from all the years (including the years as multiindex), but I was still unable to do a proper analysis on any of the 'teams' matches, since the players' names were not included, just the word 'team'. So my next fix involved inserting the players' names into the correct places on the team matches for each year, allowing analysis on team matches as well as a true 'total' for matches won, matches played, etc.
+
+At this point, I was able to reinspect the data for accuracy when compared to the 'accepted' values. I found the data to be fully accurate except two players were off by one in their triples (I counted a win where AZ forum member counted a loss). After visual inspection of the wikipedia page, I verified that my data was correct as per wikipedia and I seperately confirmed it was correct with data from the matchroom sports website.
