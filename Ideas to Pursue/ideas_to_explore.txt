@@ -13,3 +13,5 @@ Take yearly results data into dataframe and do something with it.
 Find out each players rookie year then do analysis on rookie year performances.
 
 Turn perf mod stuff into a class
+
+**add in 2018 results data
