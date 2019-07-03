@@ -15,6 +15,7 @@ Initial scrape only got data from 1998 to 2013.
 2015 data was backwards relative to other data so scraper had to be tweaked a bit.
 
 1994-1998 data was of a different format and had to be scraped separately then integrated into the main data set.
+**update: 2016-2018 data has been added
 
 ### 2- Data Cleaning and Organization
 
@@ -24,7 +25,8 @@ The cleaned data was then stored in a sql database in the 'results' table.
 
 Player data was acquired seperately and stored in 'players' table. 
 
-In addition, the 'Yearly' table was created to store each year's final score, along with location. 'MVP' data was extracted from the yearly data and stored in the 'mvp' table.
+In addition, the 'Yearly' table was created to store each year's final score, along with location. 
+'MVP' data was extracted from the yearly data and stored in the 'mvp' table.
 
 ### 3- Data Analysis
 
