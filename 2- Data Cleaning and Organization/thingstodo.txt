@@ -1,0 +1,4 @@
+things to do:
+
+need to update players table. it is a manual scrape from wikipedia which is outdated 
+

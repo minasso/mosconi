@@ -10,8 +10,8 @@ Whether or not Corey should be on the team.
 
 Take yearly results data into dataframe and do something with it.
 
-Find out each players rookie year then do analysis on rookie year performances.
+Find out each players rookie year then do analysis on rookie year performances (done)
 
 Turn perf mod stuff into a class
 
-**add in 2018 results data
+**add in 2018 results data (done)
